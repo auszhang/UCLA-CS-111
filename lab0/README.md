@@ -1,5 +1,7 @@
 NAME: Christopher Aziz
+
 EMAIL: caziz@ucla.edu
+
 ID: 000000000
 
 # Project/Lab 0: Warm-Up
