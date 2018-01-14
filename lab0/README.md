@@ -1,6 +1,5 @@
 NAME: Christopher Aziz  
 EMAIL: caziz@ucla.edu  
-ID: 000000000  
 
 # Project/Lab 0: Warm-Up
 
@@ -9,7 +8,7 @@ ID: 000000000
 File | Details
 --- | ---
 lab0.c | Source code for lab0
-Makefile | Makefile that includes the targets `build`, `check`, `clean`, or `dist` as well as the smoke-test checks listed below
+Makefile | Makefile that includes the targets `build`, `check`, `clean`, and `dist` as well as the smoke-test checks listed below
 backtrace.png | Screenshot detailing use of gdb to inspect backtrace after use of segfault option
 pointer.png | Screenshot detailing use of gdb to inspect NULL pointer
 README.md | (this file) Provides information detailing the project
