@@ -4,7 +4,7 @@
 
 CFLAGS = -Wall -Wextra -g
 CC = gcc
-STUDENT_ID = 304806012
+STUDENT_ID = 000000000
 DIST_FILES = Makefile README lab0.c breakpoint.png backtrace.png
 checks = check_success check_invalid_option check_invalid_input check_invalid_output check_segfault_catch
 
