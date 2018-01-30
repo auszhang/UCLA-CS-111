@@ -1,6 +1,5 @@
-NAME: Christopher Aziz
-EMAIL: caziz@ucla.edu
-ID: 000000000
+NAME: Christopher Aziz  
+EMAIL: caziz@ucla.edu  
 
 # Project 1A: Terminal I/O and Inter-Process Communication
 
@@ -10,7 +9,7 @@ File | Details
 --- | ---
 lab1a.c | Source code for lab1a
 Makefile | Makefile that includes the targets `build`, `check`, `clean`
-README | This file describing each of the included files and other information about the submission
+README.md | This file describing each of the included files and other information about the submission
 
 
 
