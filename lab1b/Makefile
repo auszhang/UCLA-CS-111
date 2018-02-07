@@ -17,4 +17,4 @@ clean:
 	rm -rf lab1b-server lab1b-client *.tar.gz *.dSYM
 
 dist: clean
-	tar -czvf lab1b-$(STUDENT_ID).tar.gz lab1b-client.c lab1b-server.c Makefile README
+	tar -czvf lab1b-$(STUDENT_ID).tar.gz lab1b-client.c lab1b-server.c Makefile README.md
