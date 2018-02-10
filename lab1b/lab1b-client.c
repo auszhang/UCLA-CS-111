@@ -234,7 +234,7 @@ void read_write_server() {
     }
 }
 
-// parses options and returns shell flag
+// parses options
 void parse_options(int argc, char **argv) {
     
     int pflag = 0;
