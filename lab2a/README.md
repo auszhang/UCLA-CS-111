@@ -28,22 +28,41 @@ README          | This file which describes each of the included files, has answ
 
 ## Questions
 
-### 2.1.1 - causing conflicts
-When there is a small number of iterations, there are essentially no concurrent operations. This is because the overhead of creating a thread is large relative to a small number of iterations and previous threads can finish their operations before getting preempted. With more iterations, there is a greater chance that a thread will get preempted during its execution and this leads to the possibility for a conflict.
+### 2.1.1 - causing conflicts:
+Why does it take many iterations before errors are seen?
+Why does a significantly smaller number of iterations so seldom fail?
 
-### 2.1.2 - cost of yielding
-Yielding is a system call that traps from the user space to the kernel space. This transition is expensive because it requires saving memory such as register values onto the kernel stack in order to execute the system call service routine before restoring values and returning. It is not possible to get valid per-operations using the --yield option because we only are getting the wall time. This does not allow us to know what each thread is doing at a given time.
+        When there is a small number of iterations, there are essentially no concurrent operations. This is because the overhead of creating a thread is large relative to a small number of iterations and previous threads can finish their operations before getting preempted. With more iterations, there is a greater chance that a thread will get preempted during its execution and this leads to the possibility for a conflict.
 
-### 2.1.3 - measurement errors
-The average cost per operations drops with increasing iterations because the overhead of initializing the threads is spread over more and more operations. We can find the correct number of iterations by increasing the number of iterations until the average cost per operation essentially flattens to a straight line (reaches its asymptote).
+### 2.1.2 - cost of yielding:
+Why are the --yield runs so much slower?
+Where is the additional time going?
+Is it possible to get valid per-operation timings if we are using the --yield option?
+If so, explain how. If not, explain why not.
 
-### 2.1.4 - costs of serialization
-For low numbers of threads, the cost of serialization is relatively low. As there are more threads, the average cost per operation increases beacuse there is extra time between each operation as threads wait for synchronized access to a critical section. Specifically, when one core updates its spin lock variable in the core's cache, that value must propogate to the caches in other cores, creating a memory contending issue which negatively impacts performance.
+        Yielding is a system call that traps from the user space to the kernel space. This transition is expensive because it requires saving memory such as register values onto the kernel stack in order to execute the system call service routine before restoring values and returning. It is not possible to get valid per-operations using the --yield option because we only are getting the wall time. This does not allow us to know what each thread is doing at a given time.
+
+### 2.1.3 - measurement errors:
+Why does the average cost per operation drop with increasing iterations?
+If the cost per iteration is a function of the number of iterations, how do we know how many iterations to run (or what the "correct" cost is)?
+
+        The average cost per operations drops with increasing iterations because the overhead of initializing the threads is spread over more and more operations. We can find the correct number of iterations by increasing the number of iterations until the average cost per operation essentially flattens to a straight line (reaches its asymptote).
+
+### 2.1.4 - costs of serialization:
+Why do all of the options perform similarly for low numbers of threads?
+Why do the three protected operations slow down as the number of threads rises?
+
+        For low numbers of threads, the cost of serialization is relatively low. As there are more threads, the average cost per operation increases beacuse there is extra time between each operation as threads wait for synchronized access to a critical section. Specifically, when one core updates its spin lock variable in the core's cache, that value must propogate to the caches in other cores, creating a memory contending issue which negatively impacts performance.
 
 ### 2.2.1 - scalability of Mutex
+Compare the variation in time per mutex-protected operation vs the number of threads in Part-1 (adds) and Part-2 (sorted lists).
+Comment on the general shapes of the curves, and explain why they have this shape.
+Comment on the relative rates of increase and differences in the shapes of the curves, and offer an explanation for these differences.
 
-As the number of threads increase, the times per mutex-protected operations in Part-1 and Part-2 increase. However, the time per operation in Part-2 increases much faster because list operations take more time and thus spend more time waiting for other threads than a simple add or subtract operation. Thus, it makes sense that while both graphs show threads and time per operation show direct positive correlatation, the sorted lists time per operation increases at a much faster rate.
+        As the number of threads increase, the times per mutex-protected operations in Part-1 and Part-2 increase. However, the time per operation in Part-2 increases much faster because list operations take more time and thus spend more time waiting for other threads than a simple add or subtract operation. Thus, it makes sense that while both graphs show threads and time per operation show direct positive correlatation, the sorted lists time per operation increases at a much faster rate.
 
 ### 2.2.2 - scalability of spin locks
+Compare the variation in time per protected operation vs the number of threads for list operations protected by Mutex vs Spin locks. Comment on the general shapes of the curves, and explain why they have this shape.
+Comment on the relative rates of increase and differences in the shapes of the curves, and offer an explanation for these differences.
 
-While mutexes put threads to sleep while they are waiting for the critical section, spin locks force threads to continue spinning for their time slice. This is inefficient, as it wastes a lot of cycles of the CPU. Thus, as the number of threads increase, the time per operation increases even faster than that of mutexes. While both increase the cost per operation as threads increase, the synchronized threads for Part-2 again increase at a faster rate than Part-1, because the list operations spend more time in the critical section than the add operations. This increases the opportunity for the threads to be preempted, causing conflicts.
+        While mutexes put threads to sleep while they are waiting for the critical section, spin locks force threads to continue spinning for their time slice. This is inefficient, as it wastes a lot of cycles of the CPU. Thus, as the number of threads increase, the time per operation increases even faster than that of mutexes. While both increase the cost per operation as threads increase, the synchronized threads for Part-2 again increase at a faster rate than Part-1, because the list operations spend more time in the critical section than the add operations. This increases the opportunity for the threads to be preempted, causing conflicts.
