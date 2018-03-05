@@ -1,7 +1,7 @@
 NAME: Christopher Aziz
 EMAIL: caziz@ucla.edu
 
-# Project 1B: Compressed Network Communication
+# Project 2B: Lock Granularity and Performance
 
 ## Included Files
 
