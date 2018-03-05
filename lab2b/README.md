@@ -1,5 +1,5 @@
-NAME: Christopher Aziz
-EMAIL: caziz@ucla.edu
+NAME: Christopher Aziz  
+EMAIL: caziz@ucla.edu  
 
 # Project 2B: Lock Granularity and Performance
 
