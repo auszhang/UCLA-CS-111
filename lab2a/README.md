@@ -1,7 +1,7 @@
 NAME: Christopher Aziz
 EMAIL: caziz@ucla.edu
 
-# Project 1B: Compressed Network Communication
+# Project 2A: Races and Synchronization
 
 ## Included Files
 
