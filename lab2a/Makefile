@@ -1,10 +1,9 @@
 # NAME: Christopher Aziz
 # EMAIL: caziz@ucla.edu
-# ID: 304806012
 
 CFLAGS = -Wall -Wextra -g -pthread
 CC = gcc
-STUDENT_ID = 304806012
+STUDENT_ID = 000000000
 
 build: lab2_add lab2_list
 

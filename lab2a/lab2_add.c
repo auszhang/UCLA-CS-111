@@ -1,6 +1,5 @@
 // NAME: Christopher Aziz
 // EMAIL: caziz@ucla.edu
-// ID: 304806012
 //
 // lab2_add.c
 // Program that implements and tests a shared variable add function

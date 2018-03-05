@@ -1,6 +1,5 @@
 // NAME: Christopher Aziz
 // EMAIL: caziz@ucla.edu
-// ID: 304806012
 //
 // lab2_list.c
 // Program that uses sorted list in a multithread environment
