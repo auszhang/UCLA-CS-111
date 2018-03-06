@@ -1,73 +1,73 @@
-Total: 4517 samples
-    4410  97.6%  97.6%     4410  97.6% sync
-      59   1.3%  98.9%       59   1.3% __strcmp_sse42
-      31   0.7%  99.6%       70   1.5% SortedList_lookup
-      12   0.3%  99.9%       35   0.8% SortedList_insert
-       3   0.1% 100.0%        3   0.1% _init
-       1   0.0% 100.0%        1   0.0% _int_malloc
-       1   0.0% 100.0%     4516 100.0% run_thread
-       0   0.0% 100.0%        1   0.0% __GI___libc_malloc
-       0   0.0% 100.0%     4516 100.0% __clone
-       0   0.0% 100.0%        1   0.0% __libc_start_main
-       0   0.0% 100.0%        1   0.0% _start
-       0   0.0% 100.0%        1   0.0% create_element
-       0   0.0% 100.0%        1   0.0% create_unsorted_list
-       0   0.0% 100.0%        1   0.0% main
-       0   0.0% 100.0%        1   0.0% rand_key
-       0   0.0% 100.0%     4516 100.0% start_thread
-ROUTINE ====================== sync in /u/cs/ugrad/aziz/lab2b/lab2a/lab2_list.c
-  4410   4410 Total samples (flat / cumulative)
-     .      .  149: void signal_handler(int signal) {
-     .      .  150:     if (signal == SIGSEGV)// invalid option
-     .      .  151:         fatal_error("Segmentation fault caught", 2);
-     .      .  152: }
-     .      .  153: 
+Total: 1387 samples
+    1201  86.6%  86.6%     1201  86.6% lock
+     139  10.0%  96.6%      139  10.0% __strcmp_sse42
+      22   1.6%  98.2%       95   6.8% SortedList_lookup
+      15   1.1%  99.3%       89   6.4% SortedList_insert
+       8   0.6%  99.9%        8   0.6% _init
+       1   0.1%  99.9%        1   0.1% SortedList_length
+       1   0.1% 100.0%        1   0.1% hash
+       0   0.0% 100.0%     1387 100.0% __clone
+       0   0.0% 100.0%     1387 100.0% run_thread
+       0   0.0% 100.0%     1387 100.0% start_thread
+ROUTINE ====================== lock in /u/cs/ugrad/aziz/lab2b/lab2_list.c
+  1201   1201 Total samples (flat / cumulative)
+     .      .  170: 
+     .      .  171: // synchronize depending on paramters
+     .      .  172: void lock(Sublist *sublist,
+     .      .  173:           struct timespec* start_ts,
+     .      .  174:           struct timespec* finish_ts,
 ---
-     .      .  154: void sync() {
-     .      .  155:     switch (opt_sync) {
-     .      .  156:         case NONE:
-     .      .  157:             return;
-     .      .  158:         case MUTEX:
-     .      .  159:             pthread_mutex_lock(&mutex);
-     .      .  160:             return;
-     .      .  161:         case SPIN_LOCK:
-  4409   4409  162:             while (__sync_lock_test_and_set(&spin_lock, 1));
-     .      .  163:             return;
-     .      .  164:         default:
-     .      .  165:             return;
-     .      .  166:     }
-     1      1  167: }
+     .      .  175:           long long* mutex_wait_time) {
+     .      .  176:     switch (opt_sync) {
+     .      .  177:         case NONE:
+     .      .  178:             return;
+     .      .  179:         case MUTEX:
+     .      .  180:             clock_gettime(CLOCK_MONOTONIC, start_ts);
+     .      .  181:             pthread_mutex_lock(&sublist->mutex);
+     .      .  182:             clock_gettime(CLOCK_MONOTONIC, finish_ts);
+     .      .  183:             *mutex_wait_time += time_diff_ns(start_ts, finish_ts);
+     .      .  184:             return;
+     .      .  185:         case SPIN_LOCK:
+  1201   1201  186:             while (__sync_lock_test_and_set(&sublist->spin_lock, 1));
+     .      .  187:             return;
+     .      .  188:         default:
+     .      .  189:             return;
+     .      .  190:     }
+     .      .  191: }
 ---
-     .      .  168: 
-     .      .  169: void unsync() {
-     .      .  170:     switch (opt_sync) {
-     .      .  171:         case NONE:
-     .      .  172:             return;
-ROUTINE ====================== sync in /u/cs/ugrad/aziz/lab2b/lab2a/lab2_list.c
-  4410   4410 Total samples (flat / cumulative)
-     .      .  149: void signal_handler(int signal) {
-     .      .  150:     if (signal == SIGSEGV)// invalid option
-     .      .  151:         fatal_error("Segmentation fault caught", 2);
-     .      .  152: }
-     .      .  153: 
+     .      .  192: 
+     .      .  193: // unsynchronize depending on parameters
+     .      .  194: void unlock(Sublist *sublist) {
+     .      .  195:     switch (opt_sync) {
+     .      .  196:         case NONE:
+ROUTINE ====================== lock in /u/cs/ugrad/aziz/lab2b/lab2_list.c
+  1201   1201 Total samples (flat / cumulative)
+     .      .  170: 
+     .      .  171: // synchronize depending on paramters
+     .      .  172: void lock(Sublist *sublist,
+     .      .  173:           struct timespec* start_ts,
+     .      .  174:           struct timespec* finish_ts,
 ---
-     .      .  154: void sync() {
-     .      .  155:     switch (opt_sync) {
-     .      .  156:         case NONE:
-     .      .  157:             return;
-     .      .  158:         case MUTEX:
-     .      .  159:             pthread_mutex_lock(&mutex);
-     .      .  160:             return;
-     .      .  161:         case SPIN_LOCK:
-  4409   4409  162:             while (__sync_lock_test_and_set(&spin_lock, 1));
-     .      .  163:             return;
-     .      .  164:         default:
-     .      .  165:             return;
-     .      .  166:     }
-     1      1  167: }
+     .      .  175:           long long* mutex_wait_time) {
+     .      .  176:     switch (opt_sync) {
+     .      .  177:         case NONE:
+     .      .  178:             return;
+     .      .  179:         case MUTEX:
+     .      .  180:             clock_gettime(CLOCK_MONOTONIC, start_ts);
+     .      .  181:             pthread_mutex_lock(&sublist->mutex);
+     .      .  182:             clock_gettime(CLOCK_MONOTONIC, finish_ts);
+     .      .  183:             *mutex_wait_time += time_diff_ns(start_ts, finish_ts);
+     .      .  184:             return;
+     .      .  185:         case SPIN_LOCK:
+  1201   1201  186:             while (__sync_lock_test_and_set(&sublist->spin_lock, 1));
+     .      .  187:             return;
+     .      .  188:         default:
+     .      .  189:             return;
+     .      .  190:     }
+     .      .  191: }
 ---
-     .      .  168: 
-     .      .  169: void unsync() {
-     .      .  170:     switch (opt_sync) {
-     .      .  171:         case NONE:
-     .      .  172:             return;
+     .      .  192: 
+     .      .  193: // unsynchronize depending on parameters
+     .      .  194: void unlock(Sublist *sublist) {
+     .      .  195:     switch (opt_sync) {
+     .      .  196:         case NONE:
