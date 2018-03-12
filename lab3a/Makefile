@@ -16,9 +16,9 @@ lab3a: lab3a.cpp
 .PHONY: dist
 dist: lab3a-000000000.tar.gz
 
-lab3a-504756191.tar.gz: lab3a.cpp Makefile README ext2_fs.h
+lab3a-000000000.tar.gz: lab3a.cpp Makefile README.md ext2_fs.h
 	tar -czf $@ $^
 
 .PHONY: clean
 clean:
-	-rm -f lab3a lab3a-504756191.tar.gz
+	-rm -f lab3a lab3a-000000000.tar.gz
