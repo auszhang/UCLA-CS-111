@@ -1,7 +1,7 @@
 NAME: Christopher Aziz  
 EMAIL: caziz@ucla.edu  
 
-# Project/Lab 0: Warm-Up
+# Project 0: Warm-Up
 
 ## Included Files
 
