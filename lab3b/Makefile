@@ -14,4 +14,4 @@ lab3b-000000000.tar.gz: lab3b.py Makefile README.md
 
 .PHONY: clean
 clean:
-	-rm -f lab3b lab3b-504756191.tar.gz
+	-rm -f lab3b lab3b-000000000.tar.gz
